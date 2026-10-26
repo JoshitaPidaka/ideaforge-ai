@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root { color-scheme: light; }
+  .dark { color-scheme: dark; }
+  body { @apply bg-slate-50 text-ink antialiased dark:bg-[#070B18] dark:text-slate-100; font-feature-settings: "cv11", "ss01"; }
+  ::selection { @apply bg-brand-200 dark:bg-brand-700; }
+  :focus-visible { @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-slate-50 dark:ring-offset-[#0B1020]; }
+}
+
+@layer components {
+  .card { @apply rounded-2xl border border-slate-200/80 bg-white shadow-soft dark:border-white/10 dark:bg-white/[.04]; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-[13px] font-semibold transition active:scale-[.98] disabled:opacity-50 disabled:pointer-events-none; }
+  .btn-primary { @apply btn bg-gradient-to-r from-brand-600 to-violet-600 text-white shadow-glow hover:brightness-110; }
+  .btn-ghost { @apply btn text-ink-soft hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/10; }
+  .btn-outline { @apply btn border border-slate-200 bg-white hover:border-brand-400 hover:text-brand-700 dark:border-white/15 dark:bg-white/5 dark:hover:text-brand-200; }
+  .chip { @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium; }
+  .input { @apply w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 dark:border-white/10 dark:bg-white/5; }
+  .label { @apply text-[11px] font-semibold uppercase tracking-wider text-ink-mute dark:text-slate-400; }
+  .gradient-text { @apply bg-gradient-to-r from-brand-500 via-violet-500 to-fuchsia-500 bg-clip-text text-transparent; }
+  .glass { @apply bg-white/70 backdrop-blur-xl dark:bg-[#0B1020]/70; }
+  .term { @apply cursor-help underline decoration-dotted decoration-brand-400 underline-offset-2; }
+}
+
+.grid-bg {
+  background-image: radial-gradient(circle at 1px 1px, rgb(99 102 241 / .14) 1px, transparent 0);
+  background-size: 22px 22px;
+}
+.skeleton { position: relative; overflow: hidden; @apply rounded-lg bg-slate-200/70 dark:bg-white/10; }
+.skeleton::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / .5), transparent); animation: shimmer 1.6s infinite; }
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+mark.evidence { @apply rounded bg-amber-200/70 px-0.5 text-inherit dark:bg-amber-400/30; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+/* ---------- v4 Lens layout + aurora glass colours ---------- */
+@layer components {
+  .glass-card { @apply rounded-2xl border border-slate-200/80 bg-white/80 shadow-soft backdrop-blur-xl dark:border-white/[.08] dark:bg-white/[.035] dark:shadow-[0_8px_40px_-12px_rgba(0,0,0,.6)]; }
+  .glass-hover { @apply transition duration-200 hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-glow dark:hover:border-brand-400/40; }
+  .pill { @apply inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] font-semibold; }
+  .kbd { @apply rounded-md border border-slate-300 bg-slate-100 px-1.5 py-0.5 font-mono text-[10px] text-slate-600 dark:border-white/15 dark:bg-white/10 dark:text-slate-300; }
+  .section-title { @apply flex items-center gap-2 text-[14px] font-bold tracking-tight; }
+  .icon-tile { @apply flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-violet-600 text-white shadow-glow; }
+  .eyebrow { @apply bg-gradient-to-r from-cyan-400 via-brand-400 to-fuchsia-400 bg-clip-text text-[11px] font-bold uppercase tracking-[.16em] text-transparent; }
+  .tag-real { @apply rounded px-1.5 py-px text-[9px] font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-600 dark:text-emerald-300; }
+  .tag-ai { @apply rounded px-1.5 py-px text-[9px] font-bold uppercase tracking-wider bg-brand-500/15 text-brand-700 dark:text-brand-200; }
+  .tag-warn { @apply rounded px-1.5 py-px text-[9px] font-bold uppercase tracking-wider bg-amber-500/15 text-amber-700 dark:text-amber-300; }
+  .tag-bad { @apply rounded px-1.5 py-px text-[9px] font-bold uppercase tracking-wider bg-rose-500/15 text-rose-600 dark:text-rose-300; }
+  .conf { @apply inline-flex items-center gap-1 rounded-md px-1.5 py-px text-[10px] font-semibold; }
+}
+.dark body { background: #070B18; }
+.aurora { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.aurora::before, .aurora::after, .aurora span { content: ""; position: absolute; border-radius: 9999px; filter: blur(90px); opacity: .5; animation: drift 22s ease-in-out infinite alternate; }
+.aurora::before { width: 46vw; height: 46vw; left: -12vw; top: -14vw; background: radial-gradient(circle, #6366F1, transparent 65%); }
+.aurora::after { width: 42vw; height: 42vw; right: -10vw; top: 8vh; background: radial-gradient(circle, #A855F7, transparent 65%); animation-delay: -8s; }
+.aurora span { width: 38vw; height: 38vw; left: 30vw; bottom: -18vw; background: radial-gradient(circle, #06B6D4, transparent 65%); opacity: .3; animation-delay: -14s; }
+:root:not(.dark) .aurora::before, :root:not(.dark) .aurora::after { opacity: .2; }
+:root:not(.dark) .aurora span { opacity: .14; }
+@keyframes drift { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(6vw, 4vh) scale(1.15); } }
+.noise { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.gradient-border { position: relative; }
+.gradient-border::before { content: ""; position: absolute; inset: 0; padding: 1px; border-radius: inherit;
+  background: linear-gradient(135deg, rgba(99,102,241,.7), rgba(168,85,247,.5), rgba(6,182,212,.5));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+.mermaid-wrap svg { max-width: none !important; height: auto; }
+.scrollbar-thin::-webkit-scrollbar { width: 8px; height: 8px; } .scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(148,163,184,.35); border-radius: 8px; }

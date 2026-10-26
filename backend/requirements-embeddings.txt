@@ -1,0 +1,4 @@
+# Optional: EmbeddingGemma (open-weight) for semantic retrieval. Without it, IdeaForge uses an LSA fallback.
+# EmbeddingGemma is gated: accept the licence at https://huggingface.co/google/embeddinggemma-300m and set HF_TOKEN.
+sentence-transformers>=5.0
+torch
