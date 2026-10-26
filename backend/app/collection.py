@@ -24,7 +24,7 @@ def list_collections() -> list[dict]:
     for p in sorted(settings.collection_dir.glob("*.jsonl")):
         if p.stem.startswith("project-"):
             continue  # per-project bounded collections are internal to the workspace
-        n = sum(1 for line in p.open() if line.strip())
+        n = sum(1 for line in p.open(encoding="utf-8") if line.strip())
         out.append({"name": p.stem, "items": n, "custom": p.stem != "seed"})
     return out
 
@@ -33,7 +33,7 @@ def load_items(name: str) -> list[Item]:
     p = _path(name)
     if not p.exists():
         raise KeyError(name)
-    return [Item.model_validate(json.loads(line)) for line in p.open() if line.strip()]
+    return [Item.model_validate(json.loads(line)) for line in p.open(encoding="utf-8") if line.strip()]
 
 
 def get_index(name: str) -> CollectionIndex:
@@ -114,7 +114,7 @@ def add_collection(name: str, filename: str, content: bytes, default_type: str =
     slug = _slug(name)
     if slug == "seed":
         slug = "seed-custom"
-    with _path(slug).open("w") as f:
+    with _path(slug).open("w", encoding="utf-8") as f:
         for it in items:
             f.write(it.model_dump_json() + "\n")
     _indexes.pop(slug, None)

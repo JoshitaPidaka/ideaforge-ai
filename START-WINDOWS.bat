@@ -2,6 +2,7 @@
 setlocal EnableDelayedExpansion
 title IdeaForge AI
 cd /d "%~dp0"
+set PYTHONUTF8=1
 echo.
 echo  ==========================================
 echo    IdeaForge AI  -  starting up

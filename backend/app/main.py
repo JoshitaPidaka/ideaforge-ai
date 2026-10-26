@@ -124,7 +124,7 @@ async def upload_collection(name: str = Form(...), default_type: str = Form("pro
 def samples():
     out = []
     for p in sorted(SAMPLES.glob("*.md")):
-        lines = p.read_text().splitlines()
+        lines = p.read_text(encoding="utf-8").splitlines()
         body = " ".join(" ".join(lines[1:]).split()[:40])
         out.append({"id": p.stem, "title": lines[0].lstrip("# ").strip(), "preview": body + "…"})
     return out
@@ -138,7 +138,7 @@ async def create_proposal(file: UploadFile | None = File(None), text: str = Form
         p = SAMPLES / f"{Path(sample).name}.md"
         if not p.exists():
             raise HTTPException(404, "Unknown sample")
-        name, body = p.name, p.read_text()
+        name, body = p.name, p.read_text(encoding="utf-8")
     elif file is not None:
         name = file.filename or "proposal"
         body, images = parse_file(name, await file.read())

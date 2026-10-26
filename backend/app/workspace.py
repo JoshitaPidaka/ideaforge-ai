@@ -407,11 +407,11 @@ def build_project_collection(pid: str) -> str:
     name = f"project-{pid}"
     items = {e["item"]["id"]: e["item"] for e in evidence(pid)}
     seed = collection.settings.collection_dir / "seed.jsonl"
-    with (collection.settings.collection_dir / f"{name}.jsonl").open("w") as f:
+    with (collection.settings.collection_dir / f"{name}.jsonl").open("w", encoding="utf-8") as f:
         for it in items.values():
             f.write(json.dumps(it) + "\n")
         if seed.exists():
-            for line in seed.open():
+            for line in seed.open(encoding="utf-8"):
                 d = json.loads(line)
                 if d["id"] not in items:
                     f.write(line if line.endswith("\n") else line + "\n")

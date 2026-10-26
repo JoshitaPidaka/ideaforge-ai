@@ -283,7 +283,7 @@ async def main() -> None:
 
     existing: dict[str, dict] = {}
     if out.exists():
-        for line in out.read_text().splitlines():
+        for line in out.read_text(encoding="utf-8").splitlines():
             if line.strip():
                 it = json.loads(line)
                 existing[it["id"]] = it
@@ -301,7 +301,7 @@ async def main() -> None:
             existing[it["id"]] = it
         print(f"  + {len(items)} items")
 
-    with out.open("w") as f:
+    with out.open("w", encoding="utf-8") as f:
         for it in existing.values():
             f.write(json.dumps(it, ensure_ascii=False) + "\n")
     by_type: dict[str, int] = {}

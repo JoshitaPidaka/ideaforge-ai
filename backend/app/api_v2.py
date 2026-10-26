@@ -29,7 +29,7 @@ async def create(idea: str = Form(""), name: str = Form(""), file: UploadFile | 
         p = SAMPLES / f"{sample.rsplit('/', 1)[-1]}.md"
         if not p.exists():
             raise HTTPException(404, "Unknown sample")
-        idea = p.read_text()
+        idea = p.read_text(encoding="utf-8")
     elif file is not None:
         idea, images = parse_file(file.filename or "idea.txt", await file.read())
         name = name or (file.filename or "").rsplit(".", 1)[0]
