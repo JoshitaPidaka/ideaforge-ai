@@ -64,9 +64,9 @@ class LSAEmbedder(Embedder):
         from sklearn.feature_extraction.text import TfidfVectorizer
 
         self.vec = TfidfVectorizer(ngram_range=(1, 2), sublinear_tf=True, min_df=1, max_df=0.6,
-                                   stop_words="english", max_features=60000)
+                                   stop_words="english", max_features=15000, dtype=np.float32)
         X = self.vec.fit_transform(docs)
-        k = max(2, min(256, X.shape[0] - 1, X.shape[1] - 1))
+        k = max(2, min(128, X.shape[0] - 1, X.shape[1] - 1))
         self.svd = TruncatedSVD(n_components=k, random_state=0)
         return self._norm(self.svd.fit_transform(X))
 

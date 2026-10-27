@@ -49,7 +49,7 @@ async def _parse_err(_: Request, e: ParseError):
 
 
 # ------------------------------------------------------------------ health & collections
-@app.get("/api/health")
+@app.api_route("/api/health", methods=["GET", "HEAD"])
 def health():
     cols = collection.list_collections()
     return {"ok": True, "ai": {"available": gemma.available, "model": gemma.model, "error": gemma.error},
